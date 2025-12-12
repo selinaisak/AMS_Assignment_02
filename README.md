@@ -1,5 +1,5 @@
 ******SETUP NGINX******
-- go to https://nginx.org/en/download.html and select appropriate mainline version (macOS might need installation via Homebrew?)
+- Go to https://nginx.org/en/download.html and select appropriate mainline version (macOS might need installation via Homebrew?)
 - I (Windows 10) chose nginx/Windows-1.29.4 (mainline)
 - In C:\nginx\conf\nginx.conf change the port in the 'listen' directive --> from 80 to 8123
 	--> example 
@@ -11,22 +11,22 @@
 
 
 
-- Start NGINX server (Powershell):
+- ***Start NGINX server (Powershell)***:
 	start nginx
 
-- Stop NGINX server (Powershell):
+- ***Stop NGINX server (Powershell)***:
 	.\nginx -s stop (Why .\?? Idk my patience just died)
 
-- Reload NGINX server (Powershell):
+- ***Reload NGINX server (Powershell)***:
 	.\nginx -s reload (must be running beforehand; used for config changes)
 
 
 
-** WHY .\nginx sometimes, WHY NOT? ***
+******WHY .\nginx sometimes, OTHERWISE NOT?******
 -s signal     : send signal to a master process: stop, quit, reopen, reload
 --> No signal without process being started first
 
 
-****** HTML FILE ******
+******HTML FILE******
 If you want to edit the default HTML file on port 8123:
---> edit this: <path_to_nginx>\html\index.html (on Windows)
+--> ***edit this***: <path_to_nginx>\html\index.html (on Windows)
