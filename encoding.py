@@ -48,4 +48,4 @@ if __name__ == "__main__":
         print(f"Too many arguments. \nUsage: python {sys.argv[0]} <video name>\nIf omitted, all videos will be encoded.")
     else:
         videos = get_files('./test_sequences')
-        encode_av1(videos)
+        encode_av1_all(videos)
