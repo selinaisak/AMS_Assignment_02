@@ -1,4 +1,5 @@
 import os
+import sys
 # pip install ffmpeg-python
 # not just 'ffmpeg' --> may not work!
 import ffmpeg
@@ -39,5 +40,12 @@ def encode_av1_all(videos):
 
 
 if __name__ == "__main__":
-    videos = get_files('./test_sequences')
-    encode_av1(videos)
+    if len(sys.argv) == 2:
+        #sys.argv[0] is the program name
+        #sys.argv[1] is the 1st argument --> here: video name (in case we want to encode single video)
+        encode_av1(sys.argv[1])
+    elif len(sys.argv) > 2:
+        print(f"Too many arguments. \nUsage: python {sys.argv[0]} <video name>\nIf ommitted, all videos will be encoded.")
+    else:
+        videos = get_files('./test_sequences')
+        encode_av1(videos)
