@@ -1,22 +1,38 @@
+<!-- SOURCES: 
+https://www.w3schools.com/html/html5_video.asp
+-->
 <!DOCTYPE html>
 <html>
-<head>
-<title>Progressive Video Downloader</title>
-<style>
-html { color-scheme: light dark; }
-body { width: 35em; margin: 0 auto;
-font-family: Tahoma, Verdana, Arial, sans-serif; }
-</style>
-</head>
-<body>
-<h1>Progressive Video Downloader</h1>
+  <head>
+    <title>Progressive Video Downloader</title>
+    <style>
+      html {
+        color-scheme: light dark;
+      }
+      body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Progressive Video Downloader</h1>
 
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
-<video width="640" height="360" controls>
-    <source src="videos/1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-</body>
+    <p>
+      If you see this page, the nginx web server is successfully installed and
+      working. Further configuration is required.
+    </p>
+    <video width="640" height="360" controls>
+      <source src="videos/1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <p>Select a video to play:</p>
+    <select id="videoSelect"></select>
+    <video id="videoPlayer" width="640" height="360" controls>
+      <source id="videoSource" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </body>
 </html>
-
