@@ -40,12 +40,13 @@ def encode_av1_all(videos):
 
 
 if __name__ == "__main__":
+    TEST_SEQ_DIR = './test_sequences'
     if len(sys.argv) == 2:
         #sys.argv[0] is the program name
         #sys.argv[1] is the 1st argument --> here: video name (in case we want to encode single video)
-        encode_av1(sys.argv[1])
+        encode_av1(TEST_SEQ_DIR + '\\'+ sys.argv[1])
     elif len(sys.argv) > 2:
         print(f"Too many arguments. \nUsage: python {sys.argv[0]} <video name>. \nIf omitted, all videos will be encoded.")
     else:
-        videos = get_files('./test_sequences')
+        videos = get_files(TEST_SEQ_DIR)
         encode_av1_all(videos)
