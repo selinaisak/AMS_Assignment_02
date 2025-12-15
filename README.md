@@ -22,13 +22,13 @@
 --> ***edit this***: ```<path_to_nginx>/html/index.html```
 - This file will provide the video player
 
-- ***Start NGINX server (Powershell)***:
+***Start NGINX server (Powershell)***:
 	```start nginx```
 
-- ***Stop NGINX server (Powershell)***:
+***Stop NGINX server (Powershell)***:
 	```.\nginx -s stop```
 
-- ***Reload NGINX server (Powershell)***:
+***Reload NGINX server (Powershell)***:
 	```.\nginx -s reload``` (must be running beforehand; used for config changes)
 
 
