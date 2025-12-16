@@ -74,6 +74,14 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
             }
           });
         });
+
+        // When a video was selected, load and play it
+        videoSelect.addEventListener("change", () => {
+            // Set the source video to the one that was selected
+            videoSource.src = videoSelect.value;
+            videoPlayer.load();
+            videoPlayer.play();
+        });
     </script>
   </body>
 </html>
