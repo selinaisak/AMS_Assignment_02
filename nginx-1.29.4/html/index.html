@@ -73,13 +73,23 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
                 videoSelect.appendChild(option);
             }
           });
+
+          // If there are any videos available --> load the first one
+          if(videoSelect.options.length > 0){
+            // videoSelect.value is the first video --> because it is the default option in select box
+            videoSource.src = videoSelect.value;
+            // Only loading necessary (playback can still be started via play button)
+            videoPlayer.load();
+          }
         });
 
         // When a video was selected, load and play it
         videoSelect.addEventListener("change", () => {
             // Set the source video to the one that was selected
             videoSource.src = videoSelect.value;
+            // Load video --> playback is not started automatically (but can be started via play button)
             videoPlayer.load();
+            // Play video automatically upon selection
             videoPlayer.play();
         });
     </script>
