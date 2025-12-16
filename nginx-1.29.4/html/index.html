@@ -20,15 +20,6 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
   <body>
     <h1>Progressive Video Downloader</h1>
 
-    <p>
-      If you see this page, the nginx web server is successfully installed and
-      working. Further configuration is required.
-    </p>
-    <video width="640" height="360" controls>
-      <source src="videos/1.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-
     <p>Select a video to play:</p>
     <select id="videoSelect"></select>
     <video id="videoPlayer" width="640" height="360" controls>
@@ -50,7 +41,7 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
           //print(html);
 
           // "Prints" the whole HTML list of the contents in /videos/ in the browser console
-          console.log(html);
+          //console.log(html);
 
           // Parse document and retrieve all video names
           const parser = new DOMParser();
