@@ -1,5 +1,6 @@
 <!-- SOURCES: 
 https://www.w3schools.com/html/html5_video.asp
+https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-domparser-excluding-the-outer-body-tag/
 -->
 <!DOCTYPE html>
 <html>
@@ -60,11 +61,16 @@ https://www.w3schools.com/html/html5_video.asp
 
           links.forEach((link) => {
             // The file name is specified in the href attribute of the hyperlink element
-            const filename = link.getAttribute('href')
+            const filename = link.getAttribute('href');
 
             // Filter for .mp4 files --> only these are relevant for selection/downloading
             if(filename && filename.endsWith('.mp4')){
-                console.log(filename)
+
+                // Create selectable options based on the available videos on the server
+                const option = document.createElement("option");
+                option.value = VIDEO_DIR + filename;
+                option.text = filename;
+                videoSelect.appendChild(option);
             }
           });
         });
