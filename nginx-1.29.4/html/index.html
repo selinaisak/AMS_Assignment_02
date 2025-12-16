@@ -15,6 +15,13 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
         margin: 0 auto;
         font-family: Tahoma, Verdana, Arial, sans-serif;
       }
+      p {
+        font-size: large;
+      }
+      select {
+        font-size: medium;
+        margin-bottom: 2em;
+      }
     </style>
   </head>
   <body>
@@ -52,21 +59,20 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
 
           links.forEach((link) => {
             // The file name is specified in the href attribute of the hyperlink element
-            const filename = link.getAttribute('href');
+            const filename = link.getAttribute("href");
 
             // Filter for .mp4 files --> only these are relevant for selection/downloading
-            if(filename && filename.endsWith('.mp4')){
-
-                // Create selectable options based on the available videos on the server
-                const option = document.createElement("option");
-                option.value = VIDEO_DIR + filename;
-                option.text = filename;
-                videoSelect.appendChild(option);
+            if (filename && filename.endsWith(".mp4")) {
+              // Create selectable options based on the available videos on the server
+              const option = document.createElement("option");
+              option.value = VIDEO_DIR + filename;
+              option.text = filename;
+              videoSelect.appendChild(option);
             }
           });
 
           // If there are any videos available --> load the first one
-          if(videoSelect.options.length > 0){
+          if (videoSelect.options.length > 0) {
             // videoSelect.value is the first video --> because it is the default option in select box
             videoSource.src = videoSelect.value;
             // Only loading necessary (playback can still be started via play button)
@@ -74,15 +80,15 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
           }
         });
 
-        // When a video was selected, load and play it
-        videoSelect.addEventListener("change", () => {
-            // Set the source video to the one that was selected
-            videoSource.src = videoSelect.value;
-            // Load video --> playback is not started automatically (but can be started via play button)
-            videoPlayer.load();
-            // Play video automatically upon selection
-            videoPlayer.play();
-        });
+      // When a video was selected, load and play it
+      videoSelect.addEventListener("change", () => {
+        // Set the source video to the one that was selected
+        videoSource.src = videoSelect.value;
+        // Load video --> playback is not started automatically (but can be started via play button)
+        videoPlayer.load();
+        // Play video automatically upon selection
+        videoPlayer.play();
+      });
     </script>
   </body>
 </html>
