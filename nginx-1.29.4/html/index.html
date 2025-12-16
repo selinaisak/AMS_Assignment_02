@@ -36,15 +36,29 @@ https://www.w3schools.com/html/html5_video.asp
     </video>
     <script>
       const VIDEO_DIR = "/videos/";
+
+      // Use these elements to configure the player --> which video to play?
+      const videoSelect = document.getElementById('videoSelect');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const videoSource = document.getElementById('videoSource');
+
+
       fetch(VIDEO_DIR)
         .then((response) => response.text())
         .then((html) => {
           // LOL super stupid mistake --> this will actually open the printing interface and attempt to print the page XD  
           //print(html);
 
-
           // "Prints" the whole HTML list of the contents in /videos/ in the browser console
-          console.log(html)
+          console.log(html);
+
+          // Parse document and retrieve all video names
+          const parser = new DOMParser();
+          const parsedDocument = parser.parseFromString(html, 'text/html');
+          
+          // print all file names in /videos/ --> they are provided as links in the HTML list
+          const links = parsedDocument.querySelectorAll('a').forEach(link => {console.log(link.getAttribute('href'))});
+
         });
     </script>
   </body>
