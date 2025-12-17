@@ -78,9 +78,15 @@ def plot_chunks(chunks_per_network, title):
         ax[2].bar(x + i * width, throughput, width, label=network)
 
     labels = [f'Chunk {i+1}' for i in range(max_chunks)]
+
+    # Center x-ticks under the group of bars
+    group_centers = x + width * (len(networks)-1) / 2
+    labels = [f'Chunk {i+1}' for i in range(max_chunks)]
+    
     for axis in ax:
-        axis.set_xticks(x + width)
-        axis.set_xticklabels(labels)
+        axis.set_xticks(group_centers)
+        # Tilt labels, so they do not overlap
+        axis.set_xticklabels(labels, rotation=45, ha='right')
         axis.grid(axis="y", linestyle="--", alpha=0.6)
         
          # Add vertical lines between chunks
