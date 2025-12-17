@@ -1,6 +1,7 @@
 <!-- SOURCES: 
 https://www.w3schools.com/html/html5_video.asp
 https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-domparser-excluding-the-outer-body-tag/
+https://www.w3schools.com/tags/ref_av_dom.asp
 -->
 <!DOCTYPE html>
 <html>
@@ -40,6 +41,14 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
       const videoSelect = document.getElementById("videoSelect");
       const videoPlayer = document.getElementById("videoPlayer");
       const videoSource = document.getElementById("videoSource");
+      const events = [
+        "waiting", // Fires when the video stops because it needs to buffer the next frame
+        "stalled", // Fires when the browser is trying to get media data, but data is not available
+        "playing", // Fires when the audio/video is playing after having been paused or stopped for buffering
+        "canplay", // Fires when the browser can start playing the audio/video
+        "canplaythrough", // Fires when the browser can play through the audio/video without stopping for buffering
+        "pause", // Fires when the audio/video has been paused
+      ];
 
       fetch(VIDEO_DIR)
         .then((response) => response.text())
@@ -88,6 +97,12 @@ https://www.geeksforgeeks.org/javascript/how-to-get-all-html-content-from-dompar
         videoPlayer.load();
         // Play video automatically upon selection
         videoPlayer.play();
+      });
+
+      events.forEach((event) => {
+        videoPlayer.addEventListener(event, () => {
+          console.log(`${event} at ${videoPlayer.currentTime.toFixed(2)}s`);
+        });
       });
     </script>
   </body>
