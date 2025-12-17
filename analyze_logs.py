@@ -31,7 +31,7 @@ def extract_video_chunks(har):
 
         # Calculate throughput in kilobits per second (size is in bytes!)
         if duration > 0:
-            throughput_kbps = (size * 8) / duration
+            throughput_kbps = ((size * 8)/1024) / (duration/1000)
         else:
             throughput_kbps = 0
 
