@@ -4,7 +4,8 @@ from pathlib import Path
 import sys
 import numpy as np   # NEW: needed for grouped bar plots
 
-LOG_DIR = Path("logs/old")
+LOG_DIR = Path("logs")
+HAR_PLOT_DIR = Path("har_plots")
 
 def load_har(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -89,9 +90,15 @@ def plot_chunks(chunks_per_network, title):
         axis.set_xticklabels(labels, rotation=45, ha='right')
         axis.grid(axis="y", linestyle="--", alpha=0.6)
         
-         # Add vertical lines between chunks
-        for xc in x[1:]:
-            axis.axvline(x=xc - 0.5 + width, color='gray', linestyle='-', alpha=0.5)
+        # Add vertical lines between chunks (center of bar group)
+        for i in range(len(group_centers) - 1):
+            midpoint = (group_centers[i] + group_centers[i + 1]) / 2  # find middle between 2 centers
+            axis.axvline(
+                x=midpoint,
+                color='gray',
+                linestyle='-',
+                alpha=0.6
+            )
 
     ax[0].set_ylabel('Size (MB)')
     ax[0].set_title('Chunk Sizes')
@@ -105,13 +112,15 @@ def plot_chunks(chunks_per_network, title):
     ax[0].legend()
 
     plt.tight_layout()
+    video = title.split('.')[0]
+    plt.savefig(HAR_PLOT_DIR / f"{video}.png")
     plt.show()
 
 def analyze_har_files(video):
     video_log_path = LOG_DIR / video
     chunks_per_network = {}   # Store chunks per network in a dictionary!
 
-    for network in ["3G", "Slow_4G", "Fast_4G"]:
+    for network in ["3G", "Slow_4G", "Fast_4G", "NT"]:
         har_path = str(video_log_path) + f"_{network}.har"
         print(har_path)
 
