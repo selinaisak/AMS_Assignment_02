@@ -3,13 +3,20 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import sys
 import numpy as np   # NEW: needed for grouped bar plots
+import re   # needed for pattern matching
+from collections import Counter # needed for counting different matches seperately
 
 LOG_DIR = Path("logs")
-HAR_PLOT_DIR = Path("har_plots")
+HAR_PLOT_DIR = Path("plots/har_plots")
+STATE_PLOT_DIR = Path("plots/state_plots")
 
 def load_har(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def load_state_log(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.readlines()
 
 def extract_video_chunks(har):
     chunks = []
@@ -44,6 +51,18 @@ def extract_video_chunks(har):
         })
 
     return chunks
+
+def extract_video_states(log_lines):
+    # Only match if they are seperate words (not if they are part of something else)
+    pattern = re.compile(r"\b(playing|waiting|stalled)\b")
+    counter = Counter()
+    for line in log_lines:
+        match = pattern.search(line)
+        if match:
+            # increase the counter only for the word that was matched
+            counter[match.group(1)] += 1
+
+    return counter
 
 def plot_chunks(chunks_per_network, title):
     # chunks_per_network is a dict: {network: [chunks]}
@@ -116,24 +135,58 @@ def plot_chunks(chunks_per_network, title):
     plt.savefig(HAR_PLOT_DIR / f"{video}.png")
     plt.show()
 
-def analyze_har_files(video):
+def plot_video_states(states_per_network, title):
+    networks = list(states_per_network.keys())
+    states = ["playing", "waiting", "stalled"]
+
+    x = np.arange(len(states))
+    width = 0.8 / len(networks)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    fig.suptitle(title)
+
+    for i, network in enumerate(networks):
+        counts = [states_per_network[network].get(state, 0) for state in states]
+        ax.bar(x + i * width, counts, width, label=network)
+
+    group_centers = x + width * (len(networks) - 1) / 2
+    ax.set_xticks(group_centers)
+    ax.set_xticklabels(states)
+
+    ax.set_ylabel("Occurrences")
+    ax.grid(axis="y", linestyle="--", alpha=0.6)
+    ax.legend()
+
+    plt.tight_layout()
+    video = title.split('.')[0]
+    plt.savefig(STATE_PLOT_DIR / f"{video}_states.png")  # CHANGE
+    plt.show()
+
+def analyze_log_files(video):
     video_log_path = LOG_DIR / video
     chunks_per_network = {}   # Store chunks per network in a dictionary!
+    states_per_network = {}
 
     for network in ["3G", "Slow_4G", "Fast_4G", "NT"]:
         har_path = str(video_log_path) + f"_{network}.har"
+        state_path = str(video_log_path) + f"_{network}.log"
         print(har_path)
+        print(state_path)
 
         har = load_har(har_path)
         chunks_per_network[network] = extract_video_chunks(har)
 
+        log_lines = load_state_log(state_path)
+        states_per_network[network] = extract_video_states(log_lines)
+
     title = f"{video}.mp4"
 
     plot_chunks(chunks_per_network, title)
+    plot_video_states(states_per_network, title)
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        analyze_har_files(sys.argv[1])
+        analyze_log_files(sys.argv[1])
     else:
         print(
             f"Wrong number of arguments.\n"
